@@ -30,29 +30,22 @@ func (n *ListNode) String() string {
  * }
  */
 func removeElements(head *ListNode, val int) *ListNode {
-	var current, pNode = head, head
-	for current != nil {
-		if current.Val == val {
-			if current == head { //如果删除的节点是头
-				head = head.Next
-				current = current.Next
-				pNode = head
-				continue
-			}
-			pNode.Next = current.Next
-			current = current.Next
-			continue
+	var dummyHead = &ListNode{Next: head}
+	var cur = dummyHead
+	for cur != nil && cur.Next != nil {
+		if cur.Next.Val == val {
+			cur.Next = cur.Next.Next
+		} else {
+			cur = cur.Next
 		}
-		pNode = current
-		current = current.Next
 	}
-	return head
+	return dummyHead.Next
 }
 
 func main() {
-	//fmt.Println(removeElements(NewLinkedList([]int{1, 2, 6, 3, 4, 5, 6}), 6))
-	//fmt.Println(removeElements(NewLinkedList([]int{}), 1))
-	//fmt.Println(removeElements(NewLinkedList([]int{7, 7, 7, 7}), 7))
+	fmt.Println(removeElements(NewLinkedList([]int{1, 2, 6, 3, 4, 5, 6}), 6))
+	fmt.Println(removeElements(NewLinkedList([]int{}), 1))
+	fmt.Println(removeElements(NewLinkedList([]int{7, 7, 7, 7}), 7))
 	fmt.Println(removeElements(NewLinkedList([]int{1, 2, 2, 1}), 2))
 }
 
