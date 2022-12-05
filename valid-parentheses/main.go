@@ -3,25 +3,34 @@ package main
 import "fmt"
 
 type Stack struct {
-	item []byte
+	item   []byte
+	length int
 }
 
 func (s *Stack) Size() int {
-	return len(s.item)
+	return s.length
 }
 
 func (s *Stack) Push(char byte) {
+	s.lazyInit()
 	s.item = append(s.item, char)
+	s.length++
 }
 
 func (s *Stack) Pop() byte {
-	length := s.Size()
-	if length == 0 {
+	if s.length == 0 {
 		return 0
 	}
-	item := s.item[length-1]
-	s.item = s.item[0 : length-1]
+	s.length--
+	item := s.item[s.length]
+	s.item = s.item[0:s.length]
 	return item
+}
+
+func (s *Stack) lazyInit() {
+	if s.item == nil {
+		s.item = make([]byte, 0, 32)
+	}
 }
 
 var tokenMapping = map[byte]byte{
