@@ -4,20 +4,27 @@ import "fmt"
 
 func lengthOfLongestSubstring(s string) int {
 	var length = len(s)
-	var j = 0
-	next := make([]int, length)
-	next[0] = j
-	for i := 1; i < length; i++ {
-		for j > 0 && s[i] != s[j] {
-			j = next[j-1]
-		}
-		if s[i] == s[j] {
-			j++
-		}
-		next[i] = j
+	if length == 0 {
+		return 0
 	}
-	fmt.Println(next)
-	return 0
+	var tmp = make(map[byte]int)
+	var start, result int
+	for i := 0; i < length; i++ {
+		if index, ok := tmp[s[i]]; ok && start <= index {
+			start = index + 1
+		} else {
+			result = max(result, i-start+1)
+		}
+		tmp[s[i]] = i
+	}
+	return result
+}
+
+func max(a, b int) int {
+	if a > b {
+		return a
+	}
+	return b
 }
 
 func main() {
