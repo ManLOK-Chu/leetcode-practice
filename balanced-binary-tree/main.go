@@ -23,56 +23,69 @@ type TreeNode struct {
  * }
  */
 func isBalanced(root *TreeNode) bool {
-	if root == nil {
-		return true
-	}
-	stack := list.New()
-	var pre, cur *TreeNode = nil, root
-	for cur != nil && stack.Len() > 0 {
-		for cur != nil {
-			stack.PushBack(cur)
-			cur = cur.Left
+	var f func(root *TreeNode) (int, bool)
+	f = func(root *TreeNode) (int, bool) {
+		if root == nil {
+			return 0, true
 		}
-		node := stack.Back().Value.(*TreeNode)
-		if node.Right == nil || node.Right == pre {
-			leftHeight := getHeight(node.Left)
-			rightHeight := getHeight(node.Right)
-			if leftHeight-rightHeight > 1 || rightHeight-leftHeight > 1 {
-				return false
-			}
-			stack.Remove(stack.Back())
-			pre = node
-			cur = nil
-		} else {
-			cur = cur.Right
+
+		leftHeight, balanced := f(root.Left)
+		if !balanced {
+			return 0, false
 		}
+
+		rightHeight, balanced := f(root.Right)
+		if !balanced {
+			return 0, false
+		}
+
+		if abs(leftHeight-rightHeight) > 1 {
+			return 0, false
+		}
+
+		return 1 + max(leftHeight, rightHeight), true
 	}
-	return true
+
+	_, balanced := f(root)
+	return balanced
 }
 
-//getHeight 层序遍历，求结点的高度
-func getHeight(root *TreeNode) int {
-	if root == nil {
-		return 0
+func max(a, b int) int {
+	if a > b {
+		return a
 	}
-	var height int
-	queue := list.New()
-	queue.PushBack(root)
-	for queue.Len() > 0 {
-		size := queue.Len()
-		height++
-		for i := 0; i < size; i++ {
-			node := queue.Remove(queue.Front()).(*TreeNode)
-			if node.Left != nil {
-				queue.PushBack(node.Left)
-			}
-			if node.Right != nil {
-				queue.PushBack(node.Right)
-			}
-		}
-	}
-	return height
+	return b
 }
+
+func abs(a int) int {
+	if a < 0 {
+		return -a
+	}
+	return a
+}
+
+//func isBalanced(root *TreeNode) bool {
+//	if root == nil {
+//		return true
+//	}
+//	if !isBalanced(root.Left) || !isBalanced(root.Right) { //它的左子树应该是一棵平衡二叉树,右子树应该是一棵平衡二叉树
+//		return false
+//	}
+//	leftHeight := maxDepth(root.Left) + 1
+//	rightHeight := maxDepth(root.Right) + 1
+//	if leftHeight-rightHeight > 1 || rightHeight-leftHeight > 1 { //任意节点左右子树高度之差绝对值小于1
+//		return false
+//	}
+//	return true
+//}
+//
+//func maxDepth(root *TreeNode) int {
+//	if root == nil {
+//		return 0
+//	}
+//	return max(maxDepth(root.Left), maxDepth(root.Right)) + 1
+//}
+//
 
 func main() {
 	fmt.Println(isBalanced(arrayToTreeNode([]int{3, 9, 20, null, null, 15, 7})))
