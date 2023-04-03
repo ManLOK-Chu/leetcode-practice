@@ -30,32 +30,20 @@ func (n *ListNode) String() string {
  * }
  */
 func reverseList(head *ListNode) *ListNode {
-	//stack := list.New()
-	//var cur = head
-	//for cur != nil {
-	//	stack.PushBack(cur.Val)
-	//	cur = cur.Next
-	//}
-	//var dummyHead = &ListNode{}
-	//var resultCur = dummyHead
-	//for stack.Len() > 0 {
-	//	val := stack.Remove(stack.Back()).(int)
-	//	resultCur.Next = &ListNode{Val: val}
-	//	resultCur = resultCur.Next
-	//}
-	//return dummyHead.Next
-	var temp, pre, cur *ListNode = nil, nil, head
+	var cur, pre, tmp *ListNode = head, nil, nil
 	for cur != nil {
-		temp = cur.Next
+		tmp = cur.Next
 		cur.Next = pre
 		pre = cur
-		cur = temp
+		cur = tmp
 	}
 	return pre
 }
 
 func main() {
 	fmt.Println(reverseList(initListNode([]int{5, 4, 3, 2, 1})))
+	fmt.Println(reverseList(initListNode([]int{1, 2})))
+	fmt.Println(reverseList(initListNode([]int{})))
 }
 
 func initListNode(arr []int) *ListNode {

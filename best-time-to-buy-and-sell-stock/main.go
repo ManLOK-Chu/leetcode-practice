@@ -2,34 +2,56 @@ package main
 
 import (
 	"fmt"
+	"math"
 )
 
+//func maxProfit(prices []int) int {
+//	//min := math.MaxInt
+//	//var res int
+//	//for i := 0; i < len(prices); i++ {
+//	//	if prices[i] < min {
+//	//		min = prices[i]
+//	//	}
+//	//	if prices[i]-min > res {
+//	//		res = prices[i] - min
+//	//	}
+//	//}
+//	//return res
+//	var max int
+//	var slowIndex, fastIndex, length = 0, 1, len(prices)
+//	for slowIndex < length-1 {
+//		if gap := prices[fastIndex] -
+//			prices[slowIndex]; gap > max {
+//			max = gap
+//		}
+//		fastIndex++
+//		if fastIndex >= length {
+//			slowIndex++
+//			fastIndex = slowIndex + 1
+//		}
+//	}
+//	return max
+//}
 func maxProfit(prices []int) int {
-	//min := math.MaxInt
-	//var res int
-	//for i := 0; i < len(prices); i++ {
-	//	if prices[i] < min {
-	//		min = prices[i]
-	//	}
-	//	if prices[i]-min > res {
-	//		res = prices[i] - min
-	//	}
-	//}
-	//return res
-	var max int
-	var slowIndex, fastIndex, length = 0, 1, len(prices)
-	for slowIndex < length-1 {
-		if gap := prices[fastIndex] -
-			prices[slowIndex]; gap > max {
-			max = gap
-		}
-		fastIndex++
-		if fastIndex >= length {
-			slowIndex++
-			fastIndex = slowIndex + 1
+	buy := prices[0]
+	sell := prices[0]
+	max := math.MinInt
+	for _, v := range prices {
+		if buy > v {
+			buy = v
+			sell = buy
+		} else if buy < v {
+			sell = v
+			gap := sell - buy
+			if gap > max {
+				max = gap
+			}
 		}
 	}
-	return max
+	if max > 0 {
+		return max
+	}
+	return 0
 }
 
 func main() {

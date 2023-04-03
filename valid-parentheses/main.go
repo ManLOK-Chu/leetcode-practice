@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"container/list"
+	"fmt"
+)
 
 type Stack struct {
 	item   []byte
@@ -39,31 +42,57 @@ var tokenMapping = map[byte]byte{
 	']': '[',
 }
 
+func isValid(s string) bool {
+	if len(s)%2 != 0 {
+		return false
+	}
+	stack := list.New()
+	for i := range s {
+		switch s[i] {
+		case '(', '{', '[':
+			stack.PushBack(s[i])
+		case ')', '}', ']':
+			if stack.Len() > 0 {
+				character := stack.Remove(stack.Back()).(byte)
+				if tokenMapping[s[i]] != character {
+					return false
+				}
+			} else {
+				return false
+			}
+
+		}
+	}
+	return stack.Len() == 0
+}
+
 func main() {
 	fmt.Println(isValid("()"))
 	fmt.Println(isValid("()[]{}"))
 	fmt.Println(isValid("(]"))
 	fmt.Println(isValid("([)]"))
 	fmt.Println(isValid("{[]}"))
+	fmt.Println(isValid("))"))
 }
-func isValid(s string) bool {
-	var length = len(s)
-	if length%2 == 1 { //奇数长度直接返回false
-		return false
-	}
-	stack := new(Stack)
-	for i := range s {
-		switch s[i] {
-		case '(', '{', '[':
-			stack.Push(s[i])
-		case ')', '}', ']':
-			if ch := stack.Pop(); ch == 0 || ch != tokenMapping[s[i]] {
-				return false
-			}
-		}
-	}
-	if stack.Size() != 0 {
-		return false
-	}
-	return true
-}
+
+//func isValid(s string) bool {
+//	var length = len(s)
+//	if length%2 == 1 { //奇数长度直接返回false
+//		return false
+//	}
+//	stack := new(Stack)
+//	for i := range s {
+//		switch s[i] {
+//		case '(', '{', '[':
+//			stack.Push(s[i])
+//		case ')', '}', ']':
+//			if ch := stack.Pop(); ch == 0 || ch != tokenMapping[s[i]] {
+//				return false
+//			}
+//		}
+//	}
+//	if stack.Size() != 0 {
+//		return false
+//	}
+//	return true
+//}

@@ -27,6 +27,8 @@ func findKthLargest(nums []int, k int) int {
 	var array IntSlice = nums
 	sort.Sort(array) //快排O(nlogn)
 	return array[k-1]
+	//sort.Ints(nums)
+	//return nums[len(nums)-k]
 }
 
 //桶排序

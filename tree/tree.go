@@ -46,22 +46,20 @@ func arrayToTreeNode(arr []int) *TreeNode {
 func main() {
 	var root = arrayToTreeNode([]int{5, 4, 6, 1, 2})
 	fmt.Println(preorderTraversal(root))
-	fmt.Println(inorderTraversal(root))
-	fmt.Println(postorderTraversal(root))
+	//fmt.Println(inorderTraversal(root))
+	//fmt.Println(postorderTraversal(root))
 }
 
 func preorderTraversal(root *TreeNode) []int {
-	var result []int
 	if root == nil {
 		return []int{}
 	}
-	stack := list.New()
+	var stack = list.New()
+	var result []int
 	stack.PushBack(root)
-	for stack.Len() != 0 {
-		element := stack.Back()
-		node, ok := element.Value.(*TreeNode)
+	for stack.Len() > 0 {
+		node, ok := stack.Remove(stack.Back()).(*TreeNode)
 		if ok {
-			stack.Remove(element)
 			if node.Right != nil { //右
 				stack.PushBack(node.Right)
 			}
@@ -71,7 +69,6 @@ func preorderTraversal(root *TreeNode) []int {
 			stack.PushBack(node) //中
 			stack.PushBack(nil)
 		} else {
-			stack.Remove(stack.Back())
 			node = stack.Remove(stack.Back()).(*TreeNode)
 			result = append(result, node.Val)
 		}

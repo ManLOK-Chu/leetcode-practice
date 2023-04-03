@@ -22,15 +22,39 @@ type TreeNode struct {
  *     Right *TreeNode
  * }
  */
+//func levelOrder(root *TreeNode) [][]int {
+//	if root == nil {
+//		return [][]int{}
+//	}
+//	var result [][]int
+//	var queue = list.New()
+//	var cur = root
+//	queue.PushBack(cur)
+//	for queue.Len() != 0 {
+//		size := queue.Len()
+//		values := make([]int, size)
+//		for i := 0; i < size; i++ {
+//			node := queue.Remove(queue.Front()).(*TreeNode)
+//			values[i] = node.Val
+//			if node.Left != nil {
+//				queue.PushBack(node.Left)
+//			}
+//			if node.Right != nil {
+//				queue.PushBack(node.Right)
+//			}
+//		}
+//		result = append(result, values)
+//	}
+//	return result
+//}
 func levelOrder(root *TreeNode) [][]int {
 	if root == nil {
 		return [][]int{}
 	}
 	var result [][]int
-	var queue = list.New()
-	var cur = root
-	queue.PushBack(cur)
-	for queue.Len() != 0 {
+	queue := list.New()
+	queue.PushBack(root)
+	for queue.Len() > 0 {
 		size := queue.Len()
 		values := make([]int, size)
 		for i := 0; i < size; i++ {
