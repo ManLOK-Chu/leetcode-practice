@@ -32,15 +32,16 @@ func merge(intervals [][]int) [][]int {
 	var intArr IntArrArray = intervals
 	sort.Sort(intArr) // 先按照区间起始位置排序
 	var merged [][]int
-	for i := 0; i < length; i++ {
+	merged = append(merged, intArr[0])
+	for i := 1; i < length; i++ {
 		left := intArr[i][0]
 		right := intArr[i][1]
+		last := merged[len(merged)-1]
 		// 如果结果数组是空的，或者当前区间的起始位置 > 结果数组中最后区间的终止位置，
 		// 则不合并，直接将当前区间加入结果数组。
-		if len(merged) == 0 || merged[len(merged)-1][1] < left {
+		if last[1] < left {
 			merged = append(merged, []int{left, right})
 		} else { // 反之将当前区间合并至结果数组的最后区间
-			last := merged[len(merged)-1]
 			last[1] = max(last[1], right)
 		}
 	}
