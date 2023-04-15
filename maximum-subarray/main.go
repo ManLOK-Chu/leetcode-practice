@@ -2,13 +2,12 @@ package main
 
 import (
 	"fmt"
-	"math"
 )
 
 //动态规划
 func maxSubArray(nums []int) int {
 	length := len(nums)
-	var result = math.MinInt
+	var result int
 	var dp = make([]int, length)
 	dp[0] = nums[0]
 	result = dp[0]

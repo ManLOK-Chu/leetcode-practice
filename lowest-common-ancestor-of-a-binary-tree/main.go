@@ -22,6 +22,8 @@ type TreeNode struct {
  *     Right *TreeNode
  * }
  */
+// 时间复杂度O(n)
+// 空间复杂度O(n)
 func lowestCommonAncestor(root, p, q *TreeNode) *TreeNode {
 	if root == nil {
 		return root
@@ -48,8 +50,7 @@ func lowestCommonAncestor(root, p, q *TreeNode) *TreeNode {
 func main() {
 	fmt.Println(lowestCommonAncestor(arrayToTreeNode([]int{3, 5, 1, 6, 2, 0, 8, null, null, 7, 4}, 5, 1)))
 	fmt.Println(lowestCommonAncestor(arrayToTreeNode([]int{3, 5, 1, 6, 2, 0, 8, null, null, 7, 4}, 5, 4)))
-	fmt.Println(lowestCommonAncestor(
-		arrayToTreeNode([]int{1, 2}, 1, 2)))
+	fmt.Println(lowestCommonAncestor(arrayToTreeNode([]int{1, 2}, 1, 2)))
 }
 
 func arrayToTreeNode(arr []int, pVal, qVal int) (*TreeNode, *TreeNode, *TreeNode) {
