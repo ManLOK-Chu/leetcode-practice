@@ -5,6 +5,7 @@ import (
 	"strings"
 )
 
+//先整体反转，在部分反转
 func reverseWords(s string) string {
 	var left, right, length = 0, 0, len(s)
 	var results []string
