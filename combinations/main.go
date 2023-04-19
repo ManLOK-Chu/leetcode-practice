@@ -2,28 +2,29 @@ package main
 
 import "fmt"
 
-var results [][]int
-
+//给定两个整数 n 和 k，返回范围 [1, n] 中所有可能的 k 个数的组合。
+//你可以按 任何顺序 返回答案。
 func combine(n int, k int) [][]int {
-	results = [][]int{}
-	backtracking(n, k, 1, []int{})
+	var results [][]int
+	var track []int
+	var backtracking func(int)
+	backtracking = func(start int) {
+		if len(track) == k {
+			temp := make([]int, k)
+			copy(temp, track)
+			results = append(results, temp)
+		}
+		if len(track)+n-start+1 < k {
+			return
+		}
+		for i := start; i <= n; i++ {
+			track = append(track, i)
+			backtracking(i + 1)
+			track = track[:len(track)-1]
+		}
+	}
+	backtracking(1)
 	return results
-}
-
-func backtracking(n, k, startIndex int, track []int) {
-	if len(track) == k {
-		temp := make([]int, k)
-		copy(temp, track)
-		results = append(results, temp)
-	}
-	if len(track)+n-startIndex+1 < k {
-		return
-	}
-	for i := startIndex; i <= n; i++ {
-		track = append(track, i)
-		backtracking(n, k, i+1, track)
-		track = track[:len(track)-1]
-	}
 }
 
 func main() {
