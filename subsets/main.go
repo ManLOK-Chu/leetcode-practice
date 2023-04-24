@@ -11,7 +11,7 @@ func subsets(nums []int) [][]int {
 	for i := 0; i < 1<<n; i++ {
 		var arr = make([]int, 0, i)
 		for j := 0; j < n; j++ {
-			if i>>j&1 > 0 {
+			if (i>>j)&1 > 0 {
 				arr = append(arr, nums[j])
 			}
 		}
@@ -44,5 +44,6 @@ func subsets(nums []int) [][]int {
 
 func main() {
 	fmt.Println(subsets([]int{1, 2, 3}))
+	fmt.Println(subsets([]int{1, 2, 3, 4}))
 	fmt.Println(subsets([]int{0}))
 }
