@@ -2,7 +2,9 @@ package main
 
 import "fmt"
 
-// 请你为 最不经常使用（LFU）缓存算法设计并实现数据结构
+// LFUCache 请你为 最不经常使用（LFU）缓存算法设计并实现数据结构
+// 这里我们使用一个HashMap实现Get操作的O(1)复杂度，同时使用另一个HashMap，
+// 其Key为频次，Value为该频次下缓存节点的双向链表，用于保存该频次的缓存节点，用于维护最小频次
 // 双哈希表
 type LFUCache struct {
 	cache    map[int]*LFUCacheNode
