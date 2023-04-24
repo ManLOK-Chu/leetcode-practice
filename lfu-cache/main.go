@@ -65,11 +65,11 @@ func (node *LFUCacheNode) remove() {
 }
 
 // 插入最前面
-func (n *LFUCacheNode) moveToHead(head *LFUCacheNode) {
-	head.next.pre = n
-	n.next = head.next
-	n.pre = head
-	head.next = n
+func (node *LFUCacheNode) moveToHead(head *LFUCacheNode) {
+	head.next.pre = node
+	node.next = head.next
+	node.pre = head
+	head.next = node
 }
 
 func Constructor(capacity int) LFUCache {
