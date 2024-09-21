@@ -2,6 +2,7 @@ package main
 
 import "fmt"
 
+//滑动窗口
 func lengthOfLongestSubstring(s string) int {
 	var length = len(s)
 	if length == 0 {
