@@ -4,8 +4,12 @@ import (
 	"fmt"
 )
 
-//动态规划
+/*
+给你一个整数数组 nums ，请你找出一个具有最大和的连续子数组（子数组最少包含一个元素），返回其最大和。
+子数组是数组中的一个连续部分。
+*/
 func maxSubArray(nums []int) int {
+	//动态规划
 	length := len(nums)
 	var result int
 	var dp = make([]int, length)
