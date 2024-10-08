@@ -4,6 +4,7 @@ import (
 	"container/list"
 	"fmt"
 	"math"
+	"strconv"
 )
 
 const null = math.MinInt32
@@ -129,6 +130,30 @@ func postorderTraversal(root *TreeNode) []int {
 			stack.Remove(stack.Back())
 			node = stack.Remove(stack.Back()).(*TreeNode)
 			result = append(result, node.Val)
+		}
+	}
+	return result
+}
+
+func binaryTreePaths(root *TreeNode) []string {
+	var result []string
+	treeStack := list.New()
+	pathStack := list.New()
+	treeStack.PushBack(root)
+	pathStack.PushBack(strconv.Itoa(root.Val))
+	for treeStack.Len() > 0 {
+		node := treeStack.Remove(treeStack.Back()).(*TreeNode)
+		paths := pathStack.Remove(pathStack.Back()).(string)
+		if node.Left == nil && node.Right == nil {
+			result = append(result, paths)
+		}
+		if node.Right != nil {
+			treeStack.PushBack(node.Right)
+			pathStack.PushBack(paths + "->" + strconv.Itoa(node.Right.Val))
+		}
+		if node.Left != nil {
+			treeStack.PushBack(node.Left)
+			pathStack.PushBack(paths + "->" + strconv.Itoa(node.Left.Val))
 		}
 	}
 	return result
